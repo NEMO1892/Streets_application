@@ -14,5 +14,4 @@ data class StreetEntity(
     val nameOfLocation: String,
     @ColumnInfo("photo_url")
     val photoUrl: String,
-
-    )
+)
