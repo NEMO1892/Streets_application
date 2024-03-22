@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "789392981430",
+    "firebase_url": "https://streets-application-default-rtdb.firebaseio.com",
+    "project_id": "streets-application",
+    "storage_bucket": "streets-application.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789392981430:android:2ba8fad965df47cebbd517",
+        "android_client_info": {
+          "package_name": "com.example.streetsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuaMd9ylrxq-qaKKCgsNONwTM8zCtEh7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789392981430:android:be10e328d805880abbd517",
+        "android_client_info": {
+          "package_name": "com.example.streetsapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuaMd9ylrxq-qaKKCgsNONwTM8zCtEh7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
