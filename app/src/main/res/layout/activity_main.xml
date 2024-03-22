@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="LOCATION"
-        android:textSize="24sp"
+        android:text="ЛОКАЦИИ"
+        android:textAppearance="@style/HeaderTextStyle"
         app:layout_constraintBottom_toBottomOf="@id/locationBackground"
         app:layout_constraintEnd_toEndOf="@id/locationBackground"
         app:layout_constraintStart_toStartOf="@id/locationBackground"
@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:paddingVertical="20dp">
 
-            <TextView
+            <EditText
                 android:id="@+id/streetsTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -56,8 +56,8 @@
                 android:background="@drawable/bg_rounded_grey"
                 android:gravity="center"
                 android:paddingVertical="8dp"
-                android:text="STREETS"
-                android:textSize="20sp"
+                android:text="Улицы"
+                android:textAppearance="@style/StreetsTextStyle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -72,10 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/white"
-        android:elevation="30dp"
         android:paddingVertical="20dp"
         app:cardCornerRadius="12dp"
-        app:cardElevation="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/streetsCardView">
@@ -94,12 +92,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/streetsCardView">
 
-            <TextView
+            <EditText
                 android:id="@+id/nameOfLocationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NAME OF LOCATION"
-                android:textSize="20sp"
+                android:text="Название локации"
+                android:textAppearance="@style/DefaultTextStyle"
                 app:layout_constraintBottom_toBottomOf="@id/plusButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/plusButton" />
@@ -131,5 +129,34 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/deleteButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_red_rounded_button"
+        android:elevation="20dp"
+        android:fontFamily="@font/ubuntu_medium"
+        android:text="Удалить"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/centerBackLayout"
+        app:layout_constraintEnd_toEndOf="@id/centerBackLayout"
+        app:layout_constraintStart_toStartOf="@id/centerBackLayout"
+        app:layout_constraintTop_toBottomOf="@id/centerBackLayout"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
