@@ -33,10 +33,9 @@ class StreetsDataSource @Inject constructor(
     }
 
     suspend fun addPhoto(photoDomain: PhotoDomain) = flow {
-        val storageReference =
-            FirebaseStorage.getInstance().getReference("images/${photoDomain.id}")
+        val storageReference = FirebaseStorage.getInstance().getReference("images/${photoDomain.id}")
         photoDomain.photoUri?.let { uri ->
-            storageReference.putFile(uri)
+            storageReference.putFile(uri).await()
         }
         emit(Unit)
     }.flowOn(Dispatchers.IO)
