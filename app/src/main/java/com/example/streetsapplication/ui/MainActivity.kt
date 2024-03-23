@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.streetsapplication.databinding.ActivityMainBinding
 import com.example.streetsapplication.domain.model.PhotoDomain
 import com.example.streetsapplication.ui.adapter.PhotosAdapter
+import com.example.streetsapplication.ui.model.StreetAndLocation
 import com.example.streetsapplication.ui.util.createUniqueId
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -74,10 +75,28 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         streetsTextView.doAfterTextChanged {
-
+            if (it?.isNotBlank() == true && it.isNotEmpty()) {
+                viewModel.setUserEvent(
+                    MainViewModel.UserEvent.ChangeStreetOrLocation(
+                        StreetAndLocation(
+                            nameOfStreet = it.toString(),
+                            nameOfLocation = nameOfLocationTextView.text.toString()
+                        )
+                    )
+                )
+            }
         }
         nameOfLocationTextView.doAfterTextChanged {
-
+            if (it?.isNotBlank() == true && it.isNotEmpty()) {
+                viewModel.setUserEvent(
+                    MainViewModel.UserEvent.ChangeStreetOrLocation(
+                        StreetAndLocation(
+                            nameOfStreet = streetsTextView.text.toString(),
+                            nameOfLocation = it.toString()
+                        )
+                    )
+                )
+            }
         }
     }
 
@@ -86,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             is MainViewModel.UIState.Error -> handleErrorState(state.errorMessage)
             is MainViewModel.UIState.Loading -> handleLoadingState()
             is MainViewModel.UIState.Success -> handleResult(state.photos)
-            is MainViewModel.UIState.StreetAdded -> handleStreetAdded()
+            is MainViewModel.UIState.StreetAndLocationSuccess -> handleStreetOrLocationAdded(state.streetAndLocation)
         }
     }
 
@@ -107,8 +126,15 @@ class MainActivity : AppCompatActivity() {
         adapter.submitList(photos)
     }
 
-    private fun handleStreetAdded() {
-
+    private fun handleStreetOrLocationAdded(streetAndLocation: StreetAndLocation) = with(binding) {
+        progressBar.isVisible = false
+        centerBackLayout.isVisible = true
+        if (streetAndLocation.nameOfStreet.isNotEmpty()) {
+            streetsTextView.setText(streetAndLocation.nameOfStreet)
+        }
+        if (streetAndLocation.nameOfLocation.isNotEmpty()) {
+            nameOfLocationTextView.setText(streetAndLocation.nameOfLocation)
+        }
     }
 
     private fun handleOnLongClick(photo: PhotoDomain) {

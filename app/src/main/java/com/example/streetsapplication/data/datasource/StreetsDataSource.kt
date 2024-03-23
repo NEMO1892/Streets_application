@@ -1,9 +1,8 @@
 package com.example.streetsapplication.data.datasource
 
-import com.example.streetsapplication.data.datasource.model.StreetAndLocationDto
+import com.example.streetsapplication.data.datasource.model.StreetAndLocationData
+import com.example.streetsapplication.data.db.dao.StreetsDao
 import com.example.streetsapplication.domain.model.PhotoDomain
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -13,13 +12,8 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class StreetsDataSource @Inject constructor(
-    private val streetsDatabaseReference: DatabaseReference,
+    private val streetsDao: StreetsDao
 ) {
-
-    fun getAllStreets(): Flow<List<StreetAndLocationDto>> = flow {
-        val querySnapshot = streetsDatabaseReference.get().await()
-        emit(querySnapshot.children.mapNotNull { data -> data.getValue<StreetAndLocationDto>() })
-    }.flowOn(Dispatchers.IO)
 
     suspend fun getAllPhotos(): Flow<List<PhotoDomain>> = flow {
         val storageReference = FirebaseStorage.getInstance().getReference("images/")
@@ -33,7 +27,8 @@ class StreetsDataSource @Inject constructor(
     }
 
     suspend fun addPhoto(photoDomain: PhotoDomain) = flow {
-        val storageReference = FirebaseStorage.getInstance().getReference("images/${photoDomain.id}")
+        val storageReference =
+            FirebaseStorage.getInstance().getReference("images/${photoDomain.id}")
         photoDomain.photoUri?.let { uri ->
             storageReference.putFile(uri).await()
         }
@@ -53,4 +48,11 @@ class StreetsDataSource @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
+    suspend fun insertStreetAndLocation(streetAndLocationData: StreetAndLocationData) = flow {
+        emit(streetsDao.insertStreetAndLocation(streetAndLocationData.mapToEntity()))
+    }.flowOn(Dispatchers.IO)
+
+    suspend fun getStreetAndLocation(): Flow<StreetAndLocationData> = flow {
+        emit(streetsDao.getStreetAndLocation(0).mapToData())
+    }.flowOn(Dispatchers.IO)
 }
